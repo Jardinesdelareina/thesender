@@ -13,5 +13,6 @@ class RecipientView(CreateView):
 
     def form_valid(self, form):
         form.save()
+        write_file.delay(form.instance.email)
         periodic_send.delay(form.instance.email)
         return super().form_valid(form)

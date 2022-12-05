@@ -9,7 +9,6 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 # Celery beat
-
 app.conf.beat_schedule = {
     'periodic-mailing': {
         'task': 'main.tasks.periodic_send',

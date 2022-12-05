@@ -1,16 +1,19 @@
 from django.core.mail import send_mail
 from django.conf import settings
 from config.celery import app
-from .service import send
+from celery import shared_task
+from .service import record_data
 from .models import Recipient
 
-@app.task()
+@shared_task()  # Переносимый task, не зависящий от app
 def write_file(email):
-    send(email)
+    # Запись данных в файл .txt
+    record_data(email)
     return True
 
-@app.task()
+@app.task()     # task, завищящий от приложения   
 def periodic_send():
+    # Периодическая рассылка по адресам, сохраненным в базе данных
     for recipient in Recipient.objects.all():
         send_mail(
             'Вы подписаны на рассылку',

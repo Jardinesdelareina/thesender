@@ -103,7 +103,9 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Redis settings
+# Redis & Celery settings
+# https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html#using-celery-with-django
+
 REDIS_HOST = '0.0.0.0'
 REDIS_PORT = '6379'
 CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
