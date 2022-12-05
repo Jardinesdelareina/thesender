@@ -12,6 +12,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'periodic-mailing': {
         'task': 'main.tasks.periodic_send',
-        'schedle': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/5'),
     },
 }
