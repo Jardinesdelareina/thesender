@@ -1,7 +1,6 @@
 from django.core.files import File
 import datetime
 
-
 def record_data(user_email):
     f = open(f'./emails.txt', 'a')
     email_list = File(f)

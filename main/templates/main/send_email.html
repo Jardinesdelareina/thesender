@@ -7,7 +7,7 @@
     <title>Подписаться на рассылку</title>
 </head>
 <body>
-    <form action="{% url 'subscribe' %}" method="post">
+    <form action="{% url 'subscriber' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Подписаться</button>

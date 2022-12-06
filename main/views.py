@@ -1,18 +1,18 @@
 from django.views.generic import CreateView
-from .models import Recipient
-from .forms import RecipientForm
-from .tasks import write_file, periodic_send
+from .models import Subscriber
+from .forms import SubscriberForm
+from .tasks import send_worker, send_beat
 
 
-class RecipientView(CreateView):
+class SubscriberView(CreateView):
     # Вывод формы подписки на рассылку
-    model = Recipient
-    form_class = RecipientForm
+    model = Subscriber
+    form_class = SubscriberForm
     success_url = '/'
     template_name = 'main/send_email.html'
 
     def form_valid(self, form):
         form.save()
-        write_file.delay(form.instance.email)
-        periodic_send.delay(form.instance.email)
+        send_worker.delay(form.instance.email)
+        print('success')
         return super().form_valid(form)

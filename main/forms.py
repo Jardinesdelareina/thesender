@@ -1,11 +1,10 @@
 from django import forms
-from .models import Recipient
+from .models import Subscriber
 
 
-class RecipientForm(forms.ModelForm):
+class SubscriberForm(forms.ModelForm):
     class Meta:
-        model = Recipient
+        model = Subscriber
         fields = (
-            'name',
             'email',
         )

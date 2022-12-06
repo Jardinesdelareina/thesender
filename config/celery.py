@@ -11,7 +11,7 @@ app.autodiscover_tasks()
 # Celery beat
 app.conf.beat_schedule = {
     'periodic-mailing': {
-        'task': 'main.tasks.periodic_send',
+        'task': 'main.tasks.send_beat',
         'schedule': crontab(minute='*/5'),
     },
 }
