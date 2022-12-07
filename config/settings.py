@@ -106,6 +106,6 @@ EMAIL_USE_TLS = True
 # Redis & Celery settings
 # https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html#using-celery-with-django
 
-CELERY_BROKER_URL = f'redis://{ALLOWED_HOSTS}:6379'
-CELERY_RESULT_BACKEND = f'redis://{ALLOWED_HOSTS}:6379'
+CELERY_BROKER_URL = env('REDIS')
+CELERY_RESULT_BACKEND = env('REDIS')
 CELERY_TIMEZONE = TIME_ZONE

@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   redis:
-    image: redis
+    image: redis:alpine
     restart: always
     ports:
       - 6379:6379
@@ -11,7 +11,7 @@ services:
   web:
     build: ./
     restart: always
-    command: ["web"]
+    command: bash entrypoint.sh
     volumes:
       - .:/usr/src/app/
     ports:
@@ -19,12 +19,34 @@ services:
     env_file:
       - ./.env
 
-  celery:
+  celery_worker:
+    build: ./
     restart: always
-    build: .
     volumes: 
       - ./:/usr/src/app/
     depends_on:
       - redis
-      - webapp
-    command: ["celery"]
+      - web
+    command: celery -A config worker --loglevel=info -P eventlet
+
+  celery_beat:
+    build: ./
+    restart: always
+    volumes: 
+      - ./:/usr/src/app/
+    depends_on:
+      - redis
+      - web
+    command: celery -A config beat -l info
+
+  celery_flower:
+    build: ./
+    restart: always
+    volumes: 
+      - ./:/usr/src/app/
+    depends_on:
+      - redis
+      - web
+    ports:
+      - 5555:5555
+    command: celery -A config flower --port=5555
